@@ -1426,5 +1426,3 @@ Picker.extend( 'pickadate', DatePicker )
 
 
 }));
-
-

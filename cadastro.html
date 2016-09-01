@@ -107,7 +107,22 @@
 
     $('.datepicker').pickadate({
       selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
+      selectYears: 120, // Creates a dropdown of 15 years to control year
+      monthsFull: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      weekdaysFull: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
+      weekdaysLetter: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+      today: '',
+      clear: 'Limpar',
+      close: 'Selecionar',
+      labelMonthNext: 'Próximo',
+      labelMonthPrev: 'Anterior',
+      labelMonthSelect: 'Selecione o mês',
+      labelYearSelect: 'Selecione o ano',
+      format: 'dd/mm/yyyy',
+      min: [1900,1,1],      // year, month, date
+      max: [2016,9,2],      // year, month, date
     });
   </script>
 </body>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Teste</title>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(init);
+
+    function init() {
+
+      var data = new google.visualization.DataTable();
+      var chart = new google.visualization.LineChart(document.getElementById('chart1'));
+      var button = document.getElementById('button');
+      var options = {
+          title: 'Batimento Cardíaco',
+          subtitle: '',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          width: 700,
+          height: 500,
+          animation:{
+            duration: 1000,
+            easing: 'out',
+          },
+        };
+
+      var rows = [
+        ['1', 136, 93],
+        ['2', 115, 87],
+        ['3', 135, 103],
+        ['4', 142, 96],
+        ['5', 121, 109],
+        ['6', 127, 72],
+        ['7', 109, 100],
+        ['8', 126, 73],
+      ];
+
+      var rowsZero = [
+        ['1', 0, 0],
+        ['2', 0, 0],
+        ['3', 0, 0],
+        ['4', 0, 0],
+        ['5', 0, 0],
+        ['6', 0, 0],
+        ['7', 0, 0],
+        ['8', 0, 0],
+      ];
+
+      data.addColumn('string', 'Element');
+      data.addColumn('number', 'Sístole');
+      data.addColumn('number', 'DIástole');
+      data.addRows(rows);
+
+      function drawChart() {
+        // Disabling the button while the chart is drawing.
+        button.disabled = true;
+        google.visualization.events.addListener(chart, 'ready',
+            function() {
+              button.disabled = false;
+            });
+        chart.draw(data, options);
+      }
+
+      button.onclick = function() {
+        var testValue = data.getValue(0, 1);
+        if(testValue === 0){
+          data = new google.visualization.DataTable();
+          data.addColumn('string', 'Element');
+          data.addColumn('number', 'Sístole');
+          data.addColumn('number', 'DIástole');
+          data.addRows(rows);
+        } else {
+          data = new google.visualization.DataTable();
+          data.addColumn('string', 'Element');
+          data.addColumn('number', 'Sístole');
+          data.addColumn('number', 'DIástole');
+          data.addRows(rowsZero);
+        }
+
+
+        drawChart();
+      }
+
+      drawChart();
+    }
+  </script>
+</head>
+<body>
+  <div id="chart1"></div>
+
+  <button id="button" type="button" name="button"> Botão </button>
+</body>
+</html>

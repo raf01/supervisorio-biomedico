@@ -2098,7 +2098,7 @@ a {
 blockquote {
   margin: 20px 0;
   padding-left: 1.5rem;
-  border-left: 5px solid #ee6e73; }
+  border-left: 5px solid #b9151b; }
 
 i {
   line-height: inherit; }
@@ -2137,7 +2137,7 @@ video.responsive-video {
   .pagination li.active a {
     color: #fff; }
   .pagination li.active {
-    background-color: #ee6e73; }
+    background-color: #b9151b; }
   .pagination li.disabled a {
     cursor: default;
     color: #999; }
@@ -2271,7 +2271,7 @@ ul.staggered-list li {
 footer.page-footer {
   margin-top: 20px;
   padding-top: 20px;
-  background-color: #ee6e73; }
+  background-color: #b9151b; }
   footer.page-footer .footer-copyright {
     overflow: hidden;
     height: 50px;
@@ -3021,7 +3021,7 @@ input[type=range] + .thumb {
 
 nav {
   color: #fff;
-  background-color: #ee6e73;
+  background-color: #b9151b;
   width: 100%;
   height: 56px;
   line-height: 56px; }
@@ -3503,7 +3503,7 @@ small {
     width: 15%;
     min-width: 80px; }
     .tabs .tab a {
-      color: #ee6e73;
+      color: #b9151b;
       display: block;
       width: 100%;
       height: 100%;
@@ -3511,15 +3511,15 @@ small {
       overflow: hidden;
       transition: color .28s ease; }
       .tabs .tab a:hover {
-        color: #f9c9cb; }
+        color: #ea4a4f; }
     .tabs .tab.disabled a {
-      color: #f9c9cb;
+      color: #ea4a4f;
       cursor: default; }
   .tabs .indicator {
     position: absolute;
     bottom: 0;
     height: 2px;
-    background-color: #f6b2b5;
+    background-color: #e83339;
     will-change: left, right; }
 
 .material-tooltip {
@@ -5192,7 +5192,7 @@ input[type=range]:focus::-ms-fill-upper {
     padding: 16px 16px 0; } }
 .side-nav .collapsible-body li.active,
 .side-nav.fixed .collapsible-body li.active {
-  background-color: #ee6e73; }
+  background-color: #b9151b; }
   .side-nav .collapsible-body li.active a,
   .side-nav.fixed .collapsible-body li.active a {
     color: #fff; }
