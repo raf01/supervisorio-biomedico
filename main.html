@@ -14,13 +14,82 @@
 
   <style media="screen">
   </style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChartPressure);
+    google.charts.setOnLoadCallback(drawChartFrequency);
+
+    function drawChartPressure() {
+
+      var dataPressure = new google.visualization.DataTable();
+      var chartPressure = new google.visualization.LineChart(document.getElementById('chart1'));
+      var optionsPressure = {
+          title: 'Pressão Arterial',
+          subtitle: '20/11/1993',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          width: 800,
+          height: 300,
+        };
+
+      var rowsPressure = [
+        ['1', 136, 93],
+        ['2', 115, 87],
+        ['3', 135, 103],
+        ['4', 142, 96],
+        ['5', 121, 109],
+        ['6', 127, 72],
+        ['7', 109, 100],
+        ['8', 126, 73],
+      ];
+
+      dataPressure.addColumn('string', 'Element');
+      dataPressure.addColumn('number', 'Sístole');
+      dataPressure.addColumn('number', 'Diástole');
+      dataPressure.addRows(rowsPressure);
+
+      chartPressure.draw(dataPressure, optionsPressure);
+    }
+
+    function drawChartFrequency() {
+
+      var dataFrequency = new google.visualization.DataTable();
+      var chartFrequency = new google.visualization.LineChart(document.getElementById('chart2'));
+      var optionsFrequency = {
+        title: 'Frequência Cardíaca',
+        subtitle: '20/11/1993',
+        curveType: 'function',
+        legend: { position: 'bottom' },
+        width: 800,
+        height: 300,
+      };
+
+      var rowsFrequency = [
+        ['1', 136],
+        ['2', 115],
+        ['3', 135],
+        ['4', 142],
+        ['5', 121],
+        ['6', 127],
+        ['7', 109],
+        ['8', 126],
+      ];
+
+      dataFrequency.addColumn('string', 'Element');
+      dataFrequency.addColumn('number', 'BPM');
+      dataFrequency.addRows(rowsFrequency);
+
+      chartFrequency.draw(dataFrequency, optionsFrequency);
+    }
+  </script>
 </head>
 
 <body>
 
   <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="center brand-logo"><i class="fa fa-heart-o" aria-hidden="true"></i>Heart Bit</a>
+      <a href="#!" class="center brand-logo"><i class="fa fa-heart-o" aria-hidden="true"></i>heart bit</a>
       <ul class="left">
         <li><a href=""><i class="material-icons">view_headline</i></a></li>
       </ul>
@@ -29,6 +98,44 @@
       </ul>
     </div>
   </nav>
+
+  <div class="row">
+    <div id="card-col" class="col s6 m3 l3">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Dados Pessoais</span>
+            <p>Peso: </p>
+            <p>Altura: </p>
+            <p>Idade: </p>
+          </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Pressão Arterial</span>
+            <p>Máxima: </p>
+            <p>Mínima: </p>
+          </div>
+          <div class="card-action">
+            <a href="#" class="red-text darken-2-text">Data</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">Frequência Cardíaca</span>
+            <p>Máxima: </p>
+            <p>Mínima: </p>
+          </div>
+          <div class="card-action">
+            <a href="#" class="red-text darken-2-text">Data</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s6 m9 l9">
+      <div id="chart1" class="row"></div>
+      <div id="chart2" class="row"></div>
+    </div>
+  </div>
 
   <footer class="page-footer white">
     <div class="footer-copyright">
