@@ -13,24 +13,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
   <style media="screen">
+    .login-container {
+      margin-top: 40px;
+    }
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="center brand-logo"><i class="fa fa-heart-o" aria-hidden="true"></i>heart bit</a>
+    </div>
+  </nav>
+  <div class="container login-container">
     <div class="row">
-      <form class="col l6 m6 s12 offset-l3 offset-m3">
+      <form action="login.php" method="post" class="col l6 m6 s12 offset-l3 offset-m3">
         <div class="row">
           <div class="input-field">
             <i class="material-icons prefix small">assignment_ind</i>
-            <input placeholder="seuemail@email.com" id="email" type="email" class="validate">
-            <label for="first_name">E-mail</label>
+            <input name="login" placeholder="seuemail@email.com" id="email" type="email" class="validate">
+            <label for="login">E-mail</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field">
             <i class="material-icons prefix small">https</i>
-            <input placeholder="********" id="password" type="password" class="validate">
+            <input name="password" placeholder="********" id="password" type="password" class="validate">
             <label for="password">Senha</label>
           </div>
         </div>
@@ -40,13 +48,14 @@
             <i class="material-icons right">send</i>
           </button>
         </div>
-        <div class="row center">
-          <button class="btn waves-effect waves-light" name="action">
-            Fazer Cadastro
-            <i class="material-icons right">assignment</i>
-          </button>
-        </div>
       </form>
+    </div>
+    <div class="row center">
+      <button class="btn waves-effect waves-light" name="cadasttro"
+        id="cadastro">
+        Fazer Cadastro
+        <i class="material-icons right">assignment</i>
+      </button>
     </div>
   </div>
 
@@ -74,6 +83,7 @@
   <!--Import jQuery before materialize.js-->
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="js/bin/materialize.js"></script>
+  <script type="text/javascript" src="js/myjs/login.js"></script>
 
 </body>
 </html>
