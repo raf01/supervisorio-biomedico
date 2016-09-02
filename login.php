@@ -58,7 +58,7 @@ else {
     unset ($_SESSION['password']);
 
     //Redireciona para a página de autenticação
-    header('location:login.html');
+    header('location:login.php');
 
 }
 
