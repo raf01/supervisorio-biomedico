@@ -29,27 +29,26 @@ $sql = "SELECT * FROM Paciente WHERE email = '$login'";
 
 $resultado = mysqli_query($conexao, $sql) or die ("Erro na seleção da tabela 1.");
 $row = mysqli_fetch_array($resultado);
-var_dump($row);
 
-if (mysqli_num_rows($resultado) == 0) {
+if ($row == NULL) {
   // Verifica no cadastro de pacientes
   $sql = "SELECT *
   FROM Medico
   WHERE email = 'guedes.rychard@gmail.com'
   AND senha = '123'";
   $resultado = mysqli_query($conexao, $sql) or die ("Erro na seleção da tabela 2.");
+  $row = mysqli_fetch_array($resultado);
 }
 
 //Caso consiga logar cria a sessão
-if (mysql_num_rows ($resultado) > 0) {
+if ($row != NULL) {
     // session_start inicia a sessão
     session_start();
 
     $_SESSION['login'] = $login;
     $_SESSION['password'] = $password;
 
-
-    header('Location: http://localhost:8080/aula/supervisorio-biomedico/main.htmlwww.example.com/');
+    header('Location: http://localhost:8080/aula/supervisorio-biomedico/main.html');
 }
 
 //Caso contrário redireciona para a página de autenticação
