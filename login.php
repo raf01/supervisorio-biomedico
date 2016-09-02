@@ -45,9 +45,8 @@ if ($row != NULL) {
     session_start();
 
     $_SESSION['login'] = $login;
-    $_SESSION['password'] = $password;
 
-    header('Location: http://localhost:8080/aula/supervisorio-biomedico/main.html');
+    header('Location: http://localhost:8080/aula/supervisorio-biomedico/main.php');
 }
 
 //Caso contrário redireciona para a página de autenticação
@@ -59,7 +58,6 @@ else {
 
     //Limpa
     unset ($_SESSION['login']);
-    unset ($_SESSION['password']);
 
     //Redireciona para a página de autenticação
     header('location:login.html');

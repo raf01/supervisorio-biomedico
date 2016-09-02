@@ -1,3 +1,51 @@
+<?PHP
+  session_start();
+  //Caso o usuário não esteja autenticado, limpa os dados e redireciona
+  if (!isset($_SESSION['login'])) {
+    var_dump("lelee");
+    //Destrói
+    session_destroy();
+
+    //Limpa
+    unset ($_SESSION['login']);
+
+    //Redireciona para a página de autenticação
+    header('Location: http://localhost:8080/aula/supervisorio-biomedico/login.html');
+  }
+
+  //Conexão mysql
+  $servername = "localhost";
+  $username = "root";
+  $password = "abc123";
+  $dbname = "BANCOSUPERVISORIO";
+  $portnumber = "3306";
+
+  $conexao = new mysqli($servername, $username, $password, $dbname , $portnumber) or die("Erro de conexão.");
+
+  // Checa conexão
+  if ($conexao->connect_error) {
+      die("Connection failed: " . $conexao->connect_error);
+  }
+
+  $email = $_SESSION['login'];
+
+  $sql = "SELECT * FROM Paciente WHERE email = '$email'";
+  $resultado = mysqli_query($conexao, $sql);
+  $row = mysqli_fetch_array($resultado);
+
+  $nome = $row['nome'];
+  $peso = $row['peso'];
+  $altura = $row['altura'];
+
+  $sql = "SELECT ROUND(DATEDIFF(NOW(), pa.datanasc)/365) AS idade FROM Paciente AS pa WHERE email = '$email'";
+  $resultado = mysqli_query($conexao, $sql);
+  $row = mysqli_fetch_array($resultado);
+  var_dump($resultado);
+  var_dump($row);
+  $idade = $row['idade'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,9 +64,23 @@
   </style>
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
   <script type="text/javascript">
+
     google.charts.load('current', {packages: ['corechart']});
     google.charts.setOnLoadCallback(drawChartPressure);
     google.charts.setOnLoadCallback(drawChartFrequency);
+    google.charts.setOnLoadCallback(updatePersonalData);
+
+    function updatePersonalData(){
+      var pesoField = document.getElementById('peso');
+      var alturaField = document.getElementById("altura");
+      var nomeField = document.getElementById("nome");
+      var idadeField = document.getElementById("idade");
+
+      pesoField.innerHTML += <?php echo $peso;?> + " kg";
+      alturaField.innerHTML += "<?php echo $altura;?> cm";
+      nomeField.innerHTML = "Dados de <?php echo $nome;?>";
+      idadeField.innerHTML += " <?php echo $idade;?> anos";
+    }
 
     function drawChartPressure() {
 
@@ -94,7 +156,7 @@
         <li><a href=""><i class="material-icons">view_headline</i></a></li>
       </ul>
       <ul class="right">
-        <li><a href="">Olá, Rafael!</a></li>
+        <li><a href="logout.php">Sair</a></li>
       </ul>
     </div>
   </nav>
@@ -103,10 +165,10 @@
     <div id="card-col" class="col s6 m3 l3">
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Dados Pessoais</span>
-            <p>Peso: </p>
-            <p>Altura: </p>
-            <p>Idade: </p>
+          <span class="card-title" id="nome">Dados Pessoais</span>
+            <p id="peso">Peso: </p>
+            <p id="altura">Altura: </p>
+            <p id="idade">Idade: </p>
           </div>
       </div>
       <div class="card">
