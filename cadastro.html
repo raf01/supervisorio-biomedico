@@ -55,7 +55,7 @@
         </div>
         <div class="row">
           <div class="input-field col s12 m12 l12">
-            <select>
+            <select id="tipo">
               <option value="" disabled selected>Selecione tipo de usuário</option>
               <option value="med">Médico</option>
               <option value="pac">Paciente</option>
@@ -63,45 +63,50 @@
             <label>Tipo de Usuário</label>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="sexo">
           <div class="input-field col s6 m6 l6">
             <select>
-              <option value="" id="sexo" disabled selected>Selecione seu sexo</option>
+              <option value="" disabled selected>Selecione seu sexo</option>
               <option value="fem">Feminino</option>
               <option value="mas">Masculino</option>
             </select>
             <label>Sexo</label>
           </div>
-          <div class="input-field col s6 m6 l6">
-            <input type="date" id="nascimento" name="nascimento" class="datepicker">
+          <div class="input-field col s6 m6 l6" id="nascimento">
+            <input type="date" name="nascimento" class="datepicker">
             <label for="nascimento">Data de Nascimento</label>
           </div>
         </div>
-        <div class="row">
-          <div class="input-field col s6 m6 l6">
-            <input type="number" name="altura" id="altura">
+        <div class="row" id="metrica-corporal">
+          <div class="input-field col s6 m6 l6" id="altura">
+            <input type="number" name="altura">
             <label for="altura">Altura (cm)</label>
           </div>
-          <div class="input-field col s6 m6 l6">
-            <input type="number" name="peso" id="peso">
+          <div class="input-field col s6 m6 l6" id="peso">
+            <input type="number" name="peso">
             <label for="altura">Peso (kg)</label>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="cpf">
           <div class="input-field col offset-s3 offset-m3 offset-l3 s6 m6 l6">
-            <input type="number" name="cpf" id="cpf">
+            <input type="number" name="cpf">
             <label for="cpf">CPF</label>
           </div>
         </div>
-        <div class="row">
+        <div class="row" id="crm">
           <div class="input-field col offset-s3 offset-m3 offset-l3 s6 m6 l6">
-            <input type="number" name="crm" id="crm">
+            <input type="number" name="crm">
             <label for="crm">CRM</label>
           </div>
         </div>
-
-        <div class="row center">
-          <button class="btn waves-effect waves-light red darken-2" type="submit" name="action">
+        <div class="row" id="prompt">
+          <div class="input-field col s12 m12 l12 center">
+            <span>Escolha um tipo de usuário para realizar o cadastro.</span>
+          </div>
+        </div>
+        <div class="row center" id="submit-button">
+          <button class="btn waves-effect waves-light red darken-2"
+              type="submit" name="action">
             Cadastrar
             <i class="material-icons right">send</i>
           </button>
@@ -159,9 +164,79 @@
       max: [2016,9,2],      // year, month, date
     });
 
-    var tipoSel = document.querySelector('#tipo');
-    tipoSel.
+    var typeSelector = document.querySelector('#tipo');
+    var type = typeSelector.options[typeSelector.selectedIndex].value;
+    updateFieldsVisibility(type);
 
+    typeSelector.onchange = function() {
+      type  = typeSelector.options[typeSelector.selectedIndex].value;
+      updateFieldsVisibility(type);
+      cleanFields();
+    }
+
+    function cleanFields() {
+      document.querySelector('#crm').value = null;
+      document.querySelector('#cpf').value = null;
+      document.querySelector('#altura').value = null;
+      document.querySelector('#nascimento').value = null;
+      document.querySelector('#sexo').value = null;
+    }
+
+    function updateFieldsVisibility(type) {
+      if(type == 'med') {
+        document.querySelector('#crm').style.visibility = "visible";
+        document.querySelector('#crm').style.display = "block";
+        document.querySelector('#cpf').style.visibility = "hidden";
+        document.querySelector('#metrica-corporal').style.visibility = "hidden";
+        document.querySelector('#nascimento').style.visibility = "hidden";
+        document.querySelector('#sexo').style.visibility = "hidden";
+        document.querySelector('#cpf').style.display = "none";
+        document.querySelector('#metrica-corporal').style.display = "none";
+        document.querySelector('#nascimento').style.display = "none";
+        document.querySelector('#sexo').style.display = "none";
+        document.querySelector('#submit-button').style.visibility = "visible";
+        document.querySelector('#submit-button').style.display = "block";
+
+        document.querySelector('#prompt').style.display = "none";
+        document.querySelector('#prompt').style.visibility = "hidden";
+      } else {
+        if(type == 'pac') {
+          document.querySelector('#crm').style.visibility = "hidden";
+          document.querySelector('#cpf').style.visibility = "visible";
+          document.querySelector('#metrica-corporal').style.visibility = "visible";
+          document.querySelector('#nascimento').style.visibility = "visible";
+          document.querySelector('#sexo').style.visibility = "visible";
+          document.querySelector('#submit-button').style.visibility = "visible";
+
+          document.querySelector('#crm').style.display = "none";
+          document.querySelector('#cpf').style.display = "block";
+          document.querySelector('#metrica-corporal').style.display = "block";
+          document.querySelector('#nascimento').style.display = "block";
+          document.querySelector('#sexo').style.display = "block";
+          document.querySelector('#submit-button').style.display = "block";
+
+          document.querySelector('#prompt').style.display = "none";
+          document.querySelector('#prompt').style.visibility = "hidden";
+        } else {
+          document.querySelector('#crm').style.visibility = "hidden";
+          document.querySelector('#cpf').style.visibility = "hidden";
+          document.querySelector('#metrica-corporal').style.visibility = "hidden";
+          document.querySelector('#nascimento').style.visibility = "hidden";
+          document.querySelector('#sexo').style.visibility = "hidden";
+          document.querySelector('#submit-button').style.visibility = "hidden";
+
+          document.querySelector('#crm').style.display = "none";
+          document.querySelector('#cpf').style.display = "none";
+          document.querySelector('#metrica-corporal').style.display = "none";
+          document.querySelector('#nascimento').style.display = "none";
+          document.querySelector('#sexo').style.display = "none";
+          document.querySelector('#submit-button').style.display = "none";
+
+          document.querySelector('#prompt').style.display = "block";
+          document.querySelector('#prompt').style.visibility = "visible";
+        }
+      }
+    }
 
   </script>
 </body>

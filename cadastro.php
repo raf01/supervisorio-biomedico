@@ -6,7 +6,7 @@ session_start();
 $nome = $_POST['nome'] ?? null;
 $login = $_POST['email'] ?? null;
 $email = $_POST['email'] ?? null;
-$password = $_POST['password'] ?? null;
+$password = MD5($_POST['password']) ?? null;
 $sexo = $_POST['sexo'] ?? null;
 $altura = $_POST['altura'] ?? null;
 $nascimento = $_POST['nascimento'] ?? null;
@@ -29,6 +29,51 @@ echo "Connected successfully";
 //Seleciona o banco de dados
 $selecionabd = mysql_select_db($database,$conexao)
             or die ("Banco de dados inexistente.");
+
+$query_select = "SELECT login FROM usuarios WHERE login = '$login'";
+$select = mysql_query($query_select,$connect);
+$array = mysql_fetch_array($select);
+$logarray = $array['login'];
+
+if($login == "" || $login == null){
+  echo"<script language='javascript' type='text/javascript'>alert('O campo login deve ser preenchido');window.location.href='cadastro.html';</script>";
+  } else {
+      if($logarray == $login){
+          echo"<script language='javascript' type='text/javascript'>alert('Esse login já existe');window.location.href='cadastro.html';</script>";
+          die();
+      } else {
+          $query_select = "SELECT idusuario FROM Paciente WHERE idusuario = (SELECT MAX(idusuario) FROM Paciente)";
+          $select = mysql_query($query_select,$connect);
+          $array = mysql_fetch_array($select);
+          $proxid = $array['idusuario'];
+
+          if ($proxid == null || $proxid == '') {
+            $query = "INSERT INTO Paciente VALUES(1, '$cpf', $altura, $peso, '$nome', '$login', '$password', '$sexo', '$nascimento')";
+            $insert = mysql_query($query,$connect);
+          } else {
+            $proxid++;
+            $query = "INSERT INTO Paciente VALUES($proxid, '$cpf', $altura, $peso, '$nome', '$login', '$password', '$sexo', '$nascimento')";
+            $insert = mysql_query($query,$connect);
+          }
+
+          if($insert){
+              echo"<script language='javascript' type='text/javascript'>alert('Usuário cadastrado com sucesso!');window.location.href='login.html'</script>";
+          } else {
+              echo"<script language='javascript' type='text/javascript'>alert('Não foi possível cadastrar esse usuário');window.location.href='cadastro.html'</script>";
+          }
+      }
+    }
+
+if ($crm != null){
+  // É um médico
+} else {
+  if ($cpf != null) {
+    // É um paciente
+  } else {
+    // Usuário zoeiro
+    echo"<script language='javascript' type='text/javascript'>alert('Preencha os campos corretamente!');window.location.href='login.html'</script>";
+  }
+}
 
 if($crm != NULL) {
   // É um médico

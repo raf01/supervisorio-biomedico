@@ -38,7 +38,6 @@ if (mysqli_num_rows($resultado) == 0) {
   WHERE email = 'guedes.rychard@gmail.com'
   AND senha = '123'";
   $resultado = mysqli_query($conexao, $sql) or die ("Erro na seleção da tabela 2.");
-  var_dump('mizera');
 }
 
 //Caso consiga logar cria a sessão
