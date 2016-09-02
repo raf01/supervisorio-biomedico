@@ -27,35 +27,35 @@
   </nav>
   <div class="container login-container">
     <div class="row">
-      <form action="cadastro.php" method="post" class="col l6 m6 s12 offset-m3 offset-l3" id="cadastro">
+      <form action="cadastro.php" method="get" class="col l6 m6 s12 offset-m3 offset-l3" id="cadastro">
 
         <div class="row">
           <div class="input-field">
-            <input placeholder="João da Silva" id="nome" name="nome" type="text" class="validate">
+            <input placeholder="João da Silva" id="nome" name="nome" type="text" class="validate" required>
             <label for="first_name">Nome</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field">
-            <input placeholder="Apelido" id="apelido" name="apelido" type="text" class="validate">
+            <input placeholder="Apelido" id="apelido" name="apelido" type="text" class="validate" >
             <label for="apelido">Apelido</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field">
-            <input placeholder="joaodasilva@email.com" id="email" name="email" type="email" class="validate">
+            <input placeholder="joaodasilva@email.com" id="email" name="email" type="email" class="validate" required>
             <label for="email">Email</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field">
-            <input placeholder="********" id="password" name="password" type="password" class="validate">
+            <input placeholder="********" id="password" name="password" type="password" class="validate" required>
             <label for="password">Senha</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12 m12 l12">
-            <select id="tipo">
+            <select id="tipo" name="tipo">
               <option value="" disabled selected>Selecione tipo de usuário</option>
               <option value="med">Médico</option>
               <option value="pac">Paciente</option>
@@ -65,10 +65,10 @@
         </div>
         <div class="row" id="sexo">
           <div class="input-field col s6 m6 l6">
-            <select>
+            <select name="sexo">
               <option value="" disabled selected>Selecione seu sexo</option>
-              <option value="fem">Feminino</option>
-              <option value="mas">Masculino</option>
+              <option value="F">Feminino</option>
+              <option value="M">Masculino</option>
             </select>
             <label>Sexo</label>
           </div>

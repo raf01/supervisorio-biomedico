@@ -30,7 +30,5 @@ CREATE TABLE Medico
   nome      varchar(100) NOT NULL,
   email     varchar(100) NOT NULL,
   senha     varchar(100) NOT NULL,
-  sexo      varchar(1)   NOT NULL,
-  datanasc  date         NOT NULL,
   PRIMARY KEY (idusuario)
 );

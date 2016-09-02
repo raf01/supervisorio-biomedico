@@ -1,24 +1,43 @@
 <?php
 //http://www.melhorweb.com.br/artigo/18082-Sessao-session--para-login-em-PHP.htm
 
-session_start();
+// session_start();
 
-$nome = $_POST['nome'] ?? null;
-$login = $_POST['email'] ?? null;
-$email = $_POST['email'] ?? null;
-$password = MD5($_POST['password']) ?? null;
-$sexo = $_POST['sexo'] ?? null;
-$altura = $_POST['altura'] ?? null;
-$nascimento = $_POST['nascimento'] ?? null;
-$cpf = $_POST['cpf'] ?? null;
-$crm = $_POST['crm'] ?? null;
+$nome = $_GET['nome'] ?? null;
+$email = $_GET['email'] ?? null;
+$login = $email;
+$tipo = $_GET['tipo'] ?? null;
+$senha = $_GET['password'] ?? null;    // TODO Adicionar o MD5
+$sexo = $_GET['sexo'] ?? null;
+$peso = $_GET['peso'] ?? null;
+$altura = $_GET['altura'] ?? null;
+$nascimento = $_GET['nascimento'] ?? null;
+$cpf = $_GET['cpf'] ?? null;
+$crm = $_GET['crm'] ?? null;
+
+if(strlen($nascimento) == 10){
+  $dia = substr($nascimento, 0, 2);
+  $mes = substr($nascimento, 3, 2);
+  $ano = substr($nascimento, 6, 4);
+} else {
+  // Easter egg das gambi
+  $dia = '01';
+  $mes = '01';
+  $ano = '1970';
+}
+
+var_dump($dia);
+var_dump($mes);
+var_dump($ano);
 
 //Conexão mysql
 $servername = "localhost";
 $username = "root";
-$password = "root";
+$password = "abc123";
+$dbname = "BANCOSUPERVISORIO";
+$portnumber = "3306";
 
-$conexao = mysql_connect($servername, $username, $password);
+$conexao = new mysqli($servername, $username, $password, $dbname , $portnumber) or die("Erro de conexão.");
 
 // Checa conexão
 if ($conexao->connect_error) {
@@ -27,67 +46,65 @@ if ($conexao->connect_error) {
 echo "Connected successfully";
 
 //Seleciona o banco de dados
-$selecionabd = mysql_select_db($database,$conexao)
-            or die ("Banco de dados inexistente.");
+// $selecionabd = mysql_select_db($database,$conexao)
+//             or die ("Banco de dados inexistente.");
 
-$query_select = "SELECT login FROM usuarios WHERE login = '$login'";
-$select = mysql_query($query_select,$connect);
-$array = mysql_fetch_array($select);
-$logarray = $array['login'];
-
-if($login == "" || $login == null){
-  echo"<script language='javascript' type='text/javascript'>alert('O campo login deve ser preenchido');window.location.href='cadastro.html';</script>";
-  } else {
-      if($logarray == $login){
-          echo"<script language='javascript' type='text/javascript'>alert('Esse login já existe');window.location.href='cadastro.html';</script>";
-          die();
-      } else {
-          $query_select = "SELECT idusuario FROM Paciente WHERE idusuario = (SELECT MAX(idusuario) FROM Paciente)";
-          $select = mysql_query($query_select,$connect);
-          $array = mysql_fetch_array($select);
-          $proxid = $array['idusuario'];
-
-          if ($proxid == null || $proxid == '') {
-            $query = "INSERT INTO Paciente VALUES(1, '$cpf', $altura, $peso, '$nome', '$login', '$password', '$sexo', '$nascimento')";
-            $insert = mysql_query($query,$connect);
-          } else {
-            $proxid++;
-            $query = "INSERT INTO Paciente VALUES($proxid, '$cpf', $altura, $peso, '$nome', '$login', '$password', '$sexo', '$nascimento')";
-            $insert = mysql_query($query,$connect);
-          }
-
-          if($insert){
-              echo"<script language='javascript' type='text/javascript'>alert('Usuário cadastrado com sucesso!');window.location.href='login.html'</script>";
-          } else {
-              echo"<script language='javascript' type='text/javascript'>alert('Não foi possível cadastrar esse usuário');window.location.href='cadastro.html'</script>";
-          }
-      }
-    }
-
-if ($crm != null){
-  // É um médico
+if($tipo == "med"){
+  $tabela = "Medico";
+} elseif($tipo == "pac") {
+  $tabela = "Paciente";
 } else {
-  if ($cpf != null) {
-    // É um paciente
-  } else {
-    // Usuário zoeiro
-    echo"<script language='javascript' type='text/javascript'>alert('Preencha os campos corretamente!');window.location.href='login.html'</script>";
-  }
+  die("Problema no tipo de usuário");
 }
 
-if($crm != NULL) {
-  // É um médico
-  $sql = "SELECT *
-  FROM Medico
-  WHERE email = '$login'
-  AND senha = '$password'";
+$sql = "SELECT * FROM $tabela WHERE email = '$email'";
+$resultado = mysqli_query($conexao, $sql);
+$row = mysqli_fetch_array($resultado);
+$logarray = $row['email'];
+
+if($email == "" || $email == null){
+  // Redundancia, isso também é verificado no HTML
+  echo"<script language='javascript' type='text/javascript'>alert('O campo login deve ser preenchido');window.location.href='cadastro.html';</script>";
 } else {
-  if($cpf != NULL) {
-    // É um Paciente
-    $sql = "SELECT *
-    FROM Paciente
-    WHERE email = '$login'
-    AND senha = '$password'";
+  if($logarray == $login){
+    echo"<script language='javascript' type='text/javascript'>alert('Esse login já existe');window.location.href='cadastro.html';</script>";
+    die();
+  } else {
+
+    $sql = "SELECT * FROM $tabela WHERE idusuario = (SELECT MAX(idusuario) FROM $tabela)";
+    $resultado = mysqli_query($conexao, $sql);
+    $row = mysqli_fetch_array($resultado);
+    $proxid = $row['idusuario'];
+
+    if ($proxid == null || $proxid == '') {
+      $proxid = 1;
+    } else {
+      $proxid++;
+    }
+    // var_dump($proxid);
+    if($tabela == "Paciente"){
+      echo '<pre>' . var_dump($proxid) . '</pre>';
+      echo '<pre>' . var_dump($cpf) . '</pre>';
+      echo '<pre>' . var_dump($altura) . '</pre>';
+      echo '<pre>' . var_dump($peso) . '</pre>';
+      echo '<pre>' . var_dump($nome) . '</pre>';
+      echo '<pre>' . var_dump($email) . '</pre>';
+      echo '<pre>' . var_dump($password) . '</pre>';
+      echo '<pre>' . var_dump($sexo) . '</pre>';
+      echo '<pre>' . var_dump('$ano/$mes/$dia') . '</pre>';
+
+      $sql = "INSERT INTO $tabela VALUES($proxid, '$cpf', $altura, $peso, '$nome', '$email', '$senha', '$sexo', '$ano/$mes/$dia')";
+
+    } else {
+      $sql = "INSERT INTO $tabela VALUES($proxid, '$crm', '$nome', '$email', '$senha')";
+    }
+
+    $insert = mysqli_query($conexao,$sql);
+    if($insert){
+      echo"<script language='javascript' type='text/javascript'>alert('Usuário cadastrado com sucesso!');window.location.href='login.html'</script>";
+    } else {
+      echo"<script language='javascript' type='text/javascript'>alert('Não foi possível cadastrar esse usuário');window.location.href='cadastro.html'</script>";
+    }
   }
 }
 
@@ -99,7 +116,7 @@ if (mysql_num_rows ($resultado) > 0) {
     session_start();
 
     $_SESSION['login'] = $login;
-    $_SESSION['password'] = $password;
+    $_SESSION['password'] = $senha;
 }
 
 //Caso contrário redireciona para a página de autenticação

@@ -3,7 +3,7 @@
 session_start();
 $login = $_GET['login'] ?? null;
 $password = $_GET['password'] ?? null;
-var_dump($password);
+
 // connection to db
 $servername = "localhost";
 $username = "root";
@@ -16,7 +16,7 @@ $conexao = new mysqli($servername, $username, $password, $dbname, $portnumber) o
 
 // Check connection
 if ($conexao->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conexao->connect_error);
 }
 //echo "Connected successfully";
 
@@ -34,8 +34,7 @@ if ($row == NULL) {
   // Verifica no cadastro de pacientes
   $sql = "SELECT *
   FROM Medico
-  WHERE email = '$login'
-  AND senha = '123'";
+  WHERE email = '$login'";
   $resultado = mysqli_query($conexao, $sql) or die ("Erro na seleção da tabela 2.");
   $row = mysqli_fetch_array($resultado);
 }
