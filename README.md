@@ -19,7 +19,7 @@ Após o cadastro e login, o usuário é remetido a uma página com as informaç�
 
 #Algumas telas
 
-![Telas de login e cadastro](https://drive.google.com/open?id=0B-O63wXhLBMvQXRBTFlCOUZza3c)
+[Telas de login e cadastro](https://drive.google.com/open?id=0B-O63wXhLBMvQXRBTFlCOUZza3c)
 
 # Requisitos mínimos
 
