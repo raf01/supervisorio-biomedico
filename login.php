@@ -34,7 +34,7 @@ if ($row == NULL) {
   // Verifica no cadastro de pacientes
   $sql = "SELECT *
   FROM Medico
-  WHERE email = 'guedes.rychard@gmail.com'
+  WHERE email = '$login'
   AND senha = '123'";
   $resultado = mysqli_query($conexao, $sql) or die ("Erro na seleção da tabela 2.");
   $row = mysqli_fetch_array($resultado);
